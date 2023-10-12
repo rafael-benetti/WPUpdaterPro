@@ -1,0 +1,2 @@
+DBUpdaterPro: Uma ferramenta para atualizar bancos de dados com facilidade.
+Ele permite que os usuários efetuem alterações em todas as tabelas do banco de dados, substituindo um domínio antigo por um novo em bancos de dados realmente grandes.
