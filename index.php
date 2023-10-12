@@ -14,20 +14,11 @@ $tables_query = "SHOW TABLES";
 $tables_result = $conn->query($tables_query);
 
 if ($tables_result) {
-    $totalTables = $tables_result->num_rows;
-    $currentTable = 0;
     $totalChanges = 0;
-    
-    echo "<div style='text-align: center; margin-top: 50px;'>";
-    echo "<h2>Progresso da Atualização das tabelas</h2>";
-    echo "<div id='progress' style='width: 60%; margin: 0 auto; background-color: #ddd;'><div id='progress-bar' style='width: 0%; height: 30px; background-color: #4CAF50; text-align: center; line-height: 30px;'>0%</div></div>";
-    
     while ($table_row = $tables_result->fetch_row()) {
-        $currentTable++;
         $table_name = $table_row[0];
         $columns_query = "SHOW COLUMNS FROM $table_name";
         $columns_result = $conn->query($columns_query);
-        
         if ($columns_result) {
             while ($column_row = $columns_result->fetch_assoc()) {
                 $column_name = $column_row['Field'];
@@ -38,20 +29,11 @@ if ($tables_result) {
                 }
             }
         }
-        
-        $progress = ($currentTable / $totalTables) * 100;
-        echo "<script>document.getElementById('progress-bar').style.width = '$progress%'; document.getElementById('progress-bar').innerHTML = '$progress%';</script>";
-        flush(); 
+        sleep(1); // Introduz o atraso de 1 segundo
     }
-    
-    echo "</div>";
     $tables_result->close();
     $conn->close();
-    
-    echo "<div style='text-align: center; margin-top: 20px;'>";
-    echo "<h2>Resumo das Alterações</h2>";
-    echo "Total de alterações feitas: $totalChanges";
-    echo "</div>";
+    echo "Total de alterações feitas: $totalChanges\n";
 } else {
     echo "Não foi possível obter a lista de tabelas.\n";
 }
